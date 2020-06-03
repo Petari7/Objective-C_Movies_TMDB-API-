@@ -40,49 +40,57 @@ NSString *cellId = @"cellId";
 
 -(void) fetchMovies {
     
-NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=2";
-    
-NSURL *url = [NSURL URLWithString:urlString];
-    
-[[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        
-//        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLog(@"String : %@", string);
-        
-NSError *err;
-        
-NSDictionary *moviesJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
-        
-if(err) {
-    NSLog(@"Failed to serialize into JSON: %@", error);
-    return;
-            
-        }
-        
-NSDictionary *dictionary = [moviesJSON objectForKey:@"results"];
-        
-NSMutableArray<Movie *>*movies = NSMutableArray.new;
-        
+  
 
-for(NSDictionary *moviesDict in dictionary) {
-            
-NSString *title = moviesDict[@"title"];
-NSNumber *id = moviesDict[@"id"];
-Movie *movie = Movie.new;
-movie.title = title;
-movie.id = id;
-[movies addObject:movie];
+     NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=2";
+        
+      
+      NSURL *url = [NSURL URLWithString:urlString];
+          
+      [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+              
+              
+      //        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+      //        NSLog(@"String : %@", string);
+              
+      NSError *err;
+              
+      NSDictionary *moviesJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+              
+      if(err) {
+          NSLog(@"Failed to serialize into JSON: %@", error);
+          return;
+                  
+              }
+              
+      NSDictionary *dictionary = [moviesJSON objectForKey:@"results"];
+              
+      NSMutableArray<Movie *>*movies = NSMutableArray.new;
+              
 
-            
-}
-self.movies = movies;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self->_collectionView reloadData];
-    });
+      for(NSDictionary *moviesDict in dictionary) {
+                  
+      NSString *title = moviesDict[@"title"];
+      NSNumber *id = moviesDict[@"id"];
+      Movie *movie = Movie.new;
+      movie.title = title;
+      movie.id = id;
+      [movies addObject:movie];
+
+                  
+      }
+      self.movies = movies;
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [self->_collectionView reloadData];
+          });
+          
+      }] resume];
+          
+        
     
-}] resume];
     
+
+
     
 }
 

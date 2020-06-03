@@ -55,6 +55,7 @@
     
     _movieLabel.text = @"Captain Coruse";
     _movieLabel.numberOfLines = 0;
+    [_movieLabel sizeToFit];
     _movieLabel.textColor = [UIColor blackColor];
     _movieLabel.textAlignment = NSTextAlignmentLeft;
   
