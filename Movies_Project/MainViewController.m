@@ -8,9 +8,16 @@
 
 #import "MainViewController.h"
 #import "CustomMovieCell.h"
+#import "MoviesModel.h"
 
 
 @interface MainViewController ()
+
+@property(strong,nonatomic) NSMutableArray<Movie *>* movies;
+
+
+
+
 
 @end
 
@@ -20,34 +27,70 @@ NSString *cellId = @"cellId";
 
 
 
+
+
 - (void)viewDidLoad
 {
      [super viewDidLoad];
+    [self setupCollectionView];
+    [self fetchMovies];
 
-    self.navigationItem.title = @"Discover Movies";
-    self.navigationController.navigationBar.prefersLargeTitles = YES;
 
-     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    _collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
+}
+
+-(void) fetchMovies {
     
-
+NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=2";
     
-    [_collectionView setDataSource:self];
-    [_collectionView setDelegate:self];
+NSURL *url = [NSURL URLWithString:urlString];
+    
+[[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        
+//        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"String : %@", string);
+        
+NSError *err;
+        
+NSDictionary *moviesJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+        
+if(err) {
+    NSLog(@"Failed to serialize into JSON: %@", error);
+    return;
+            
+        }
+        
+NSDictionary *dictionary = [moviesJSON objectForKey:@"results"];
+        
+NSMutableArray<Movie *>*movies = NSMutableArray.new;
+        
 
-    [_collectionView registerClass:[CustomMovieCell class] forCellWithReuseIdentifier:cellId];
-    [_collectionView setBackgroundColor:[UIColor whiteColor]];
+for(NSDictionary *moviesDict in dictionary) {
+            
+NSString *title = moviesDict[@"title"];
+NSNumber *id = moviesDict[@"id"];
+Movie *movie = Movie.new;
+movie.title = title;
+movie.id = id;
+[movies addObject:movie];
 
-    [self.view addSubview:_collectionView];
-
-
+            
+}
+self.movies = movies;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self->_collectionView reloadData];
+    });
+    
+}] resume];
+    
+    
 }
 
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 15;
+    return self.movies.count;
 }
 
 
@@ -55,6 +98,11 @@ NSString *cellId = @"cellId";
 {
     
     CustomMovieCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    
+    Movie *movie = self.movies[indexPath.row];
+    cell.movieLabel.text = movie.title;
+    cell.id = movie.id;
+    
     
     cell.layer.shadowOffset = CGSizeMake(1, 0);
     cell.layer.shadowColor = [[UIColor grayColor] CGColor];
@@ -73,7 +121,7 @@ NSString *cellId = @"cellId";
     CGFloat newSize = 0;
     newSize = (self.view.frame.size.width - 3 * 8) / 2;
     
-    return CGSizeMake(newSize, newSize + 36);
+    return CGSizeMake(newSize, newSize + 48);
     
 }
 
@@ -88,6 +136,26 @@ return 1;
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(16, 8, 0, 8);
+}
+
+- (void)setupCollectionView {
+    self.navigationItem.title = @"Discover Movies";
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
+    
+    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
+    _collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
+    
+    
+    
+    [_collectionView setDataSource:self];
+    [_collectionView setDelegate:self];
+    
+   
+    
+    [_collectionView registerClass:[CustomMovieCell class] forCellWithReuseIdentifier:cellId];
+    [_collectionView setBackgroundColor:[UIColor whiteColor]];
+    
+    [self.view addSubview:_collectionView];
 }
 
 @end

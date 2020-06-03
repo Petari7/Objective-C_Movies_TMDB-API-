@@ -13,6 +13,7 @@
 		461BB9012486D482007C9358 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461BB9002486D482007C9358 /* Assets.xcassets */; };
 		461BB9072486D482007C9358 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 461BB9062486D482007C9358 /* main.m */; };
 		468355862488041D0067E4C4 /* CustomMovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468355852488041D0067E4C4 /* CustomMovieCell.m */; };
+		468355892488204E0067E4C4 /* MoviesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 468355882488204E0067E4C4 /* MoviesModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,8 @@
 		461BB9062486D482007C9358 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		468355842488041D0067E4C4 /* CustomMovieCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomMovieCell.h; sourceTree = "<group>"; };
 		468355852488041D0067E4C4 /* CustomMovieCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomMovieCell.m; sourceTree = "<group>"; };
+		468355872488204E0067E4C4 /* MoviesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoviesModel.h; sourceTree = "<group>"; };
+		468355882488204E0067E4C4 /* MoviesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoviesModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 			children = (
 				461BB8F42486D47F007C9358 /* AppDelegate.h */,
 				461BB8F52486D47F007C9358 /* AppDelegate.m */,
+				468355872488204E0067E4C4 /* MoviesModel.h */,
+				468355882488204E0067E4C4 /* MoviesModel.m */,
 				461BB8F72486D47F007C9358 /* SceneDelegate.h */,
 				461BB8F82486D47F007C9358 /* SceneDelegate.m */,
 				461BB8FA2486D47F007C9358 /* MainViewController.h */,
@@ -143,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				468355892488204E0067E4C4 /* MoviesModel.m in Sources */,
 				461BB8FC2486D47F007C9358 /* MainViewController.m in Sources */,
 				461BB8F62486D47F007C9358 /* AppDelegate.m in Sources */,
 				461BB9072486D482007C9358 /* main.m in Sources */,

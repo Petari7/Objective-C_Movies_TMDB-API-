@@ -11,7 +11,10 @@
 @implementation CustomMovieCell
 
 
+
+
 - (instancetype)initWithFrame:(CGRect)frame
+
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -34,7 +37,7 @@
     _movieLabel.translatesAutoresizingMaskIntoConstraints = false;
     [self.contentView addSubview:_movieLabel];
     [self.contentView addSubview:_movieImage];
-    [_movieImage.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-38].active = true;
+    [_movieImage.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-58].active = true;
     [_movieImage.leftAnchor constraintEqualToAnchor:self.contentView.leftAnchor constant:0].active = true;
     [_movieImage.rightAnchor constraintEqualToAnchor:self.contentView.rightAnchor constant:0].active = true;
     
@@ -51,8 +54,10 @@
     [_movieLabel.topAnchor constraintEqualToAnchor:self.movieImage.bottomAnchor constant:0].active = true;
     
     _movieLabel.text = @"Captain Coruse";
+    _movieLabel.numberOfLines = 0;
     _movieLabel.textColor = [UIColor blackColor];
     _movieLabel.textAlignment = NSTextAlignmentLeft;
+  
     
     self.backgroundColor = [UIColor whiteColor];
 }
