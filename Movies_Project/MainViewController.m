@@ -55,9 +55,14 @@ NSString *cellId = @"cellId";
 {
     
     CustomMovieCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
+    
+    cell.layer.shadowOffset = CGSizeMake(1, 0);
+    cell.layer.shadowColor = [[UIColor grayColor] CGColor];
+    cell.layer.shadowRadius = 5;
+    cell.layer.shadowOpacity = .50;
+    
 
-    cell.clipsToBounds = true;
-    cell.layer.cornerRadius = 18;
+   
     return cell;
 }
 
@@ -68,7 +73,7 @@ NSString *cellId = @"cellId";
     CGFloat newSize = 0;
     newSize = (self.view.frame.size.width - 3 * 8) / 2;
     
-    return CGSizeMake(newSize, newSize + 28);
+    return CGSizeMake(newSize, newSize + 36);
     
 }
 

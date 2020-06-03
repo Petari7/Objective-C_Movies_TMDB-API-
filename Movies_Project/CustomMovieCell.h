@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CustomMovieCell : UICollectionViewCell
 
+@property(nonatomic, strong) UILabel *movieLabel;
+@property(nonatomic, strong) UIImageView *movieImage;
+
 @end
 
 NS_ASSUME_NONNULL_END
