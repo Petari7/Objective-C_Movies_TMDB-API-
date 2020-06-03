@@ -18,7 +18,7 @@
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
   
-//-MARK: Bypass Storyboards
+//-MARK: Storyboard Bypass
 self.window = UIWindow.new;
 self.window.windowScene = (UIWindowScene *)scene;
 self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController: MainViewController.new];

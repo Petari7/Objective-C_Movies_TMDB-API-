@@ -12,6 +12,7 @@
 		461BB8FC2486D47F007C9358 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 461BB8FB2486D47F007C9358 /* MainViewController.m */; };
 		461BB9012486D482007C9358 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 461BB9002486D482007C9358 /* Assets.xcassets */; };
 		461BB9072486D482007C9358 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 461BB9062486D482007C9358 /* main.m */; };
+		468355862488041D0067E4C4 /* CustomMovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468355852488041D0067E4C4 /* CustomMovieCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		461BB9002486D482007C9358 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		461BB9052486D482007C9358 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		461BB9062486D482007C9358 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		468355842488041D0067E4C4 /* CustomMovieCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomMovieCell.h; sourceTree = "<group>"; };
+		468355852488041D0067E4C4 /* CustomMovieCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomMovieCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 				461BB8F82486D47F007C9358 /* SceneDelegate.m */,
 				461BB8FA2486D47F007C9358 /* MainViewController.h */,
 				461BB8FB2486D47F007C9358 /* MainViewController.m */,
+				468355842488041D0067E4C4 /* CustomMovieCell.h */,
+				468355852488041D0067E4C4 /* CustomMovieCell.m */,
 				461BB9002486D482007C9358 /* Assets.xcassets */,
 				461BB9052486D482007C9358 /* Info.plist */,
 				461BB9062486D482007C9358 /* main.m */,
@@ -142,6 +147,7 @@
 				461BB8F62486D47F007C9358 /* AppDelegate.m in Sources */,
 				461BB9072486D482007C9358 /* main.m in Sources */,
 				461BB8F92486D47F007C9358 /* SceneDelegate.m in Sources */,
+				468355862488041D0067E4C4 /* CustomMovieCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

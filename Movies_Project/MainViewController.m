@@ -7,17 +7,25 @@
 //
 
 #import "MainViewController.h"
+#import "CustomMovieCell.h"
+
 
 @interface MainViewController ()
 
 @end
 
+NSString *cellId = @"cellId";
+
 @implementation MainViewController
+
+
 
 - (void)viewDidLoad
 {
      [super viewDidLoad];
-     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+    self.navigationItem.title = @"Discover Movies";
+    self.navigationController.navigationBar.prefersLargeTitles = YES;
 
      UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     _collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
@@ -27,13 +35,12 @@
     [_collectionView setDataSource:self];
     [_collectionView setDelegate:self];
 
-    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+    [_collectionView registerClass:[CustomMovieCell class] forCellWithReuseIdentifier:cellId];
     [_collectionView setBackgroundColor:[UIColor whiteColor]];
 
     [self.view addSubview:_collectionView];
 
 
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 
@@ -43,13 +50,12 @@
     return 15;
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
+    CustomMovieCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
 
-    cell.backgroundColor=[UIColor greenColor];
     cell.clipsToBounds = true;
     cell.layer.cornerRadius = 18;
     return cell;
@@ -76,7 +82,7 @@ return 1;
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(8, 8, 0, 8);
+    return UIEdgeInsetsMake(16, 8, 0, 8);
 }
 
 @end
