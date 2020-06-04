@@ -14,6 +14,8 @@
 
 @property(strong,nonatomic) NSString *title;
 @property(strong,nonatomic) NSNumber *id;
+@property(strong,nonatomic) NSString *poster_path;
+
 
 
 @end

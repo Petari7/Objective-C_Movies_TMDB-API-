@@ -7,8 +7,10 @@
 //
 
 #import "CustomMovieCell.h"
+#import <SDWebImage/SDWebImage.h>
 
 @implementation CustomMovieCell
+
 
 
 
@@ -20,6 +22,8 @@
     if (self) {
         
         [self setupViews];
+        
+      
         
         
     }
@@ -43,7 +47,7 @@
     
     [_movieImage.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:0].active = true;
     
-    _movieImage.backgroundColor = [UIColor greenColor];
+    _movieImage.backgroundColor = [UIColor whiteColor];
     
     [_movieLabel.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:0].active = true;
     

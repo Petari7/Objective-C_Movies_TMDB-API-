@@ -9,6 +9,8 @@
 #import "MainViewController.h"
 #import "CustomMovieCell.h"
 #import "MoviesModel.h"
+#import <SDWebImage/SDWebImage.h>
+
 
 
 @interface MainViewController ()
@@ -34,15 +36,18 @@ NSString *cellId = @"cellId";
      [super viewDidLoad];
     [self setupCollectionView];
     [self fetchMovies];
+   
 
 
 }
+
+
 
 -(void) fetchMovies {
     
   
 
-     NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=2";
+     NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=4";
         
       
       NSURL *url = [NSURL URLWithString:urlString];
@@ -50,8 +55,7 @@ NSString *cellId = @"cellId";
       [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
               
               
-      //        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-      //        NSLog(@"String : %@", string);
+  
               
       NSError *err;
               
@@ -72,9 +76,14 @@ NSString *cellId = @"cellId";
                   
       NSString *title = moviesDict[@"title"];
       NSNumber *id = moviesDict[@"id"];
+          NSString *poster = moviesDict[@"poster_path"];
       Movie *movie = Movie.new;
+      movie.poster_path = poster;
       movie.title = title;
       movie.id = id;
+          
+   
+          
       [movies addObject:movie];
 
                   
@@ -96,8 +105,11 @@ NSString *cellId = @"cellId";
 
 
 
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
+     
+    
     return self.movies.count;
 }
 
@@ -111,7 +123,11 @@ NSString *cellId = @"cellId";
     cell.movieLabel.text = movie.title;
     cell.id = movie.id;
     
+    NSString *str = @"https://image.tmdb.org/t/p/w185";
+    str = [str stringByAppendingString:movie.poster_path];
     
+    [cell.movieImage sd_setImageWithURL:[NSURL URLWithString: str ]];
+   
     cell.layer.shadowOffset = CGSizeMake(1, 0);
     cell.layer.shadowColor = [[UIColor grayColor] CGColor];
     cell.layer.shadowRadius = 5;
