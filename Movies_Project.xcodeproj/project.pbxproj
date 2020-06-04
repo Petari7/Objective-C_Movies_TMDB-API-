@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		461BB9072486D482007C9358 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 461BB9062486D482007C9358 /* main.m */; };
 		468355862488041D0067E4C4 /* CustomMovieCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 468355852488041D0067E4C4 /* CustomMovieCell.m */; };
 		468355892488204E0067E4C4 /* MoviesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 468355882488204E0067E4C4 /* MoviesModel.m */; };
+		4683558C24894EB00067E4C4 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4683558B24894EB00067E4C4 /* InfoViewController.m */; };
 		DB2A2C4B45911C5A1A4802B5 /* Pods_Movies_Project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FF3C714AADC0060719C8E6 /* Pods_Movies_Project.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,8 @@
 		468355852488041D0067E4C4 /* CustomMovieCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomMovieCell.m; sourceTree = "<group>"; };
 		468355872488204E0067E4C4 /* MoviesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoviesModel.h; sourceTree = "<group>"; };
 		468355882488204E0067E4C4 /* MoviesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoviesModel.m; sourceTree = "<group>"; };
+		4683558A24894EB00067E4C4 /* InfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		4683558B24894EB00067E4C4 /* InfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +81,8 @@
 				461BB8F82486D47F007C9358 /* SceneDelegate.m */,
 				461BB8FA2486D47F007C9358 /* MainViewController.h */,
 				461BB8FB2486D47F007C9358 /* MainViewController.m */,
+				4683558A24894EB00067E4C4 /* InfoViewController.h */,
+				4683558B24894EB00067E4C4 /* InfoViewController.m */,
 				468355842488041D0067E4C4 /* CustomMovieCell.h */,
 				468355852488041D0067E4C4 /* CustomMovieCell.m */,
 				461BB9002486D482007C9358 /* Assets.xcassets */,
@@ -93,7 +98,6 @@
 				2027A7342D1CE14E0F1EDEA1 /* Pods-Movies_Project.debug.xcconfig */,
 				38609F93918E88F0DE23A2DE /* Pods-Movies_Project.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -222,6 +226,7 @@
 				461BB8F62486D47F007C9358 /* AppDelegate.m in Sources */,
 				461BB9072486D482007C9358 /* main.m in Sources */,
 				461BB8F92486D47F007C9358 /* SceneDelegate.m in Sources */,
+				4683558C24894EB00067E4C4 /* InfoViewController.m in Sources */,
 				468355862488041D0067E4C4 /* CustomMovieCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

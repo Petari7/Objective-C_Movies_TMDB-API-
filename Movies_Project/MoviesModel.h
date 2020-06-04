@@ -13,7 +13,7 @@
 @interface Movie : NSObject
 
 @property(strong,nonatomic) NSString *title;
-@property(strong,nonatomic) NSNumber *id;
+@property(strong,nonatomic) NSNumber *identifier;
 @property(strong,nonatomic) NSString *poster_path;
 
 

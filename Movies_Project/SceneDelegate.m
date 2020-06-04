@@ -22,7 +22,7 @@
 self.window = UIWindow.new;
 self.window.windowScene = (UIWindowScene *)scene;
 self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController: MainViewController.new];
-self.window.backgroundColor = [UIColor redColor];
+self.window.backgroundColor = [UIColor whiteColor];
 [self.window makeKeyAndVisible];
      
    

@@ -10,6 +10,8 @@
 #import "CustomMovieCell.h"
 #import "MoviesModel.h"
 #import <SDWebImage/SDWebImage.h>
+#import "InfoViewController.h"
+
 
 
 
@@ -47,7 +49,7 @@ NSString *cellId = @"cellId";
     
   
 
-     NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=4";
+     NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
         
       
       NSURL *url = [NSURL URLWithString:urlString];
@@ -75,13 +77,13 @@ NSString *cellId = @"cellId";
       for(NSDictionary *moviesDict in dictionary) {
                   
       NSString *title = moviesDict[@"title"];
-      NSNumber *id = moviesDict[@"id"];
-          NSString *poster = moviesDict[@"poster_path"];
+      NSNumber *identifier = moviesDict[@"id"];
+      NSString *poster = moviesDict[@"poster_path"];
       Movie *movie = Movie.new;
       movie.poster_path = poster;
       movie.title = title;
-      movie.id = id;
-          
+      movie.identifier = identifier;
+    
    
           
       [movies addObject:movie];
@@ -121,7 +123,7 @@ NSString *cellId = @"cellId";
     
     Movie *movie = self.movies[indexPath.row];
     cell.movieLabel.text = movie.title;
-    cell.id = movie.id;
+    cell.identifier = movie.identifier;
     
     NSString *str = @"https://image.tmdb.org/t/p/w185";
     str = [str stringByAppendingString:movie.poster_path];
@@ -136,6 +138,17 @@ NSString *cellId = @"cellId";
 
    
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Movie *movie = self.movies[indexPath.row];
+    
+    
+    [self.navigationController presentViewController:[[UINavigationController alloc]initWithRootViewController: InfoViewController.new] animated:YES completion:nil];
+    
+    
+    
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath

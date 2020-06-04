@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(strong, nonatomic) UILabel *movieLabel;
 @property(strong, nonatomic) UIImageView *movieImage;
-@property(strong, nonatomic) NSNumber *id;
+@property(strong, nonatomic) NSNumber *identifier;
 
 @end
 
