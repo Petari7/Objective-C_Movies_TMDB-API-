@@ -11,6 +11,7 @@
 #import "MoviesModel.h"
 #import <SDWebImage/SDWebImage.h>
 #import "InfoViewController.h"
+#import "MovieInfoModel.h"
 
 
 
@@ -23,9 +24,13 @@
 
 
 
+
 @end
 
 NSString *cellId = @"cellId";
+
+NSNumber *number;
+
 
 @implementation MainViewController
 
@@ -33,28 +38,98 @@ NSString *cellId = @"cellId";
 
 
 
+
+
+
 - (void)viewDidLoad
 {
+    
+   
+    
      [super viewDidLoad];
     [self setupCollectionView];
     [self fetchMovies];
    
+   
+    
+    
+    
+       
+      
+        
 
 
 }
 
+-(void) fetchMovieInfo: (NSString *) identifier completion:(void(^)(MovieInfoModel* movieInfo, NSURLResponse *response))callback
+{
 
-
--(void) fetchMovies {
+NSString *firstStringTile = @"https://api.themoviedb.org/3/movie/";
+NSString *identif = identifier;
+NSString *lastStringTile = @"?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US";
+NSString *string = [NSString stringWithFormat:@"%@ %@ %@", firstStringTile, identif, lastStringTile];
     
-  
+NSString *urlString;
+    
+urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+//
+    
+NSURL *url = [NSURL URLWithString:urlString];
+    
+    
 
-     NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+
+[[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+
+NSError *err;
+NSDictionary *moviesInfoJSon = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+
+if(err) {
+NSLog(@"Failed to serialize into JSON: %@", error);
+return;
+}
+
+
+
+NSString *overview = moviesInfoJSon[@"overview"];
+NSString *releaseDate = moviesInfoJSon[@"release_date"];
+NSString *tagline = moviesInfoJSon[@"tagline"];
+
+
+MovieInfoModel *movie = MovieInfoModel.new;
+movie.overview = overview;
+movie.release_date = releaseDate;
+movie.tagline = tagline;
+
+
+
+    
+callback(movie, response);
+
+
+}] resume];
+
+
+
+
+
+
+    
+    
+    
+}
+
+
+
+-(void) fetchMovies{
+    
+    
+NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
         
-      
-      NSURL *url = [NSURL URLWithString:urlString];
-          
-      [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+NSURL *url = [NSURL URLWithString:urlString];
+    
+
+[[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
               
               
   
@@ -77,7 +152,7 @@ NSString *cellId = @"cellId";
       for(NSDictionary *moviesDict in dictionary) {
                   
       NSString *title = moviesDict[@"title"];
-      NSNumber *identifier = moviesDict[@"id"];
+      NSString *identifier = moviesDict[@"id"];
       NSString *poster = moviesDict[@"poster_path"];
       NSString *backGroundImg = moviesDict[@"backdrop_path"];
       Movie *movie = Movie.new;
@@ -127,6 +202,9 @@ NSString *cellId = @"cellId";
     cell.movieLabel.text = movie.title;
     cell.identifier = movie.identifier;
     
+   
+    
+    
     NSString *str = @"https://image.tmdb.org/t/p/w185";
     str = [str stringByAppendingString:movie.poster_path];
     
@@ -146,9 +224,21 @@ NSString *cellId = @"cellId";
 {
     Movie *movie = self.movies[indexPath.row];
     InfoViewController *vc;
-    
     vc = InfoViewController.new;
+    
+
+ 
+    [self fetchMovieInfo:movie.identifier completion:^(MovieInfoModel *movieInfo, NSURLResponse *resp) {
+        
+    NSLog(@"%@", movieInfo.tagline);
+   
+    vc.movieInfo = movieInfo;
+ 
+    }];
+    
+
     vc.movie = movie;
+    
   
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController: vc];
     

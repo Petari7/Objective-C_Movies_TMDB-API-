@@ -60,7 +60,13 @@ NSString *cellid = @"cellId";
     
      
 
-      
+    self.movieNameLabel.text = _movie.title;
+    self.overviewLabel.text = _movieInfo.overview;
+    self.tagLineLabel.text = _movieInfo.tagline;
+    
+    
+    
+  
     
     NSString *str = @"https://image.tmdb.org/t/p/w185";
     str = [str stringByAppendingString:_movie.poster_path];
@@ -121,6 +127,11 @@ self.view.backgroundColor = [UIColor whiteColor];
     
     
 }
+
+
+
+
+
 
 -(void)setupViews {
     
@@ -213,7 +224,7 @@ self.view.backgroundColor = [UIColor whiteColor];
     
     self.overviewLabel = UILabel.new;
     self.overviewLabel.translatesAutoresizingMaskIntoConstraints = false;
-    self.overviewLabel.text = @"The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon.when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon.when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon.when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon.";
+    
      
     self.overviewLabel.numberOfLines = 0;
    

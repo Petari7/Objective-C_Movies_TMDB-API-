@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MoviesModel.h"
+#import "MovieInfoModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong,nonatomic) NSString *movieTitle;
 @property(strong, nonatomic) Movie *movie;
+@property(strong, nonatomic) MovieInfoModel *movieInfo;
 @property(strong, nonatomic) UIImageView *backGroundImageView;
 @property(strong, nonatomic) UIImageView *imageView;
 @property(strong, nonatomic) UILabel *movieNameLabel;

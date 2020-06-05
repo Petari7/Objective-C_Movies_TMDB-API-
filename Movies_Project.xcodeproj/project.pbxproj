@@ -16,6 +16,7 @@
 		468355892488204E0067E4C4 /* MoviesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 468355882488204E0067E4C4 /* MoviesModel.m */; };
 		4683558C24894EB00067E4C4 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4683558B24894EB00067E4C4 /* InfoViewController.m */; };
 		4683558F2489862B0067E4C4 /* CustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4683558E2489862B0067E4C4 /* CustomCollectionViewCell.m */; };
+		46835595248AB0C50067E4C4 /* MovieInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 46835594248AB0C50067E4C4 /* MovieInfoModel.m */; };
 		DB2A2C4B45911C5A1A4802B5 /* Pods_Movies_Project.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FF3C714AADC0060719C8E6 /* Pods_Movies_Project.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,8 @@
 		4683558B24894EB00067E4C4 /* InfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		4683558D2489862B0067E4C4 /* CustomCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCell.h; sourceTree = "<group>"; };
 		4683558E2489862B0067E4C4 /* CustomCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCell.m; sourceTree = "<group>"; };
+		46835593248AB0C50067E4C4 /* MovieInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MovieInfoModel.h; sourceTree = "<group>"; };
+		46835594248AB0C50067E4C4 /* MovieInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MovieInfoModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 			children = (
 				4683558D2489862B0067E4C4 /* CustomCollectionViewCell.h */,
 				4683558E2489862B0067E4C4 /* CustomCollectionViewCell.m */,
+				46835593248AB0C50067E4C4 /* MovieInfoModel.h */,
+				46835594248AB0C50067E4C4 /* MovieInfoModel.m */,
 				461BB8F32486D47F007C9358 /* Movies_Project */,
 				461BB8F22486D47F007C9358 /* Products */,
 				7D7E6405AD16D9CA7BEC0FCD /* Pods */,
@@ -233,6 +238,7 @@
 				461BB8F92486D47F007C9358 /* SceneDelegate.m in Sources */,
 				4683558C24894EB00067E4C4 /* InfoViewController.m in Sources */,
 				468355862488041D0067E4C4 /* CustomMovieCell.m in Sources */,
+				46835595248AB0C50067E4C4 /* MovieInfoModel.m in Sources */,
 				4683558F2489862B0067E4C4 /* CustomCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

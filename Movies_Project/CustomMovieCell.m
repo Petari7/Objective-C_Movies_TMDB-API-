@@ -9,7 +9,8 @@
 #import "CustomMovieCell.h"
 #import <SDWebImage/SDWebImage.h>
 
-@implementation CustomMovieCell
+
+@implementation CustomMovieCell 
 
 
 
@@ -22,6 +23,7 @@
     if (self) {
         
         [self setupViews];
+        
         
       
         
@@ -66,5 +68,8 @@
     
     self.backgroundColor = [UIColor whiteColor];
 }
+
+
+
 
 @end

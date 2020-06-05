@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MainViewController.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CustomMovieCell : UICollectionViewCell
+@interface CustomMovieCell : UICollectionViewCell 
 
 @property(strong, nonatomic) UILabel *movieLabel;
 @property(strong, nonatomic) UIImageView *movieImage;
-@property(strong, nonatomic) NSNumber *identifier;
+@property(strong, nonatomic) NSString *identifier;
 
 @end
 
