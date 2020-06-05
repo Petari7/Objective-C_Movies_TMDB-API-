@@ -79,10 +79,12 @@ NSString *cellId = @"cellId";
       NSString *title = moviesDict[@"title"];
       NSNumber *identifier = moviesDict[@"id"];
       NSString *poster = moviesDict[@"poster_path"];
+      NSString *backGroundImg = moviesDict[@"backdrop_path"];
       Movie *movie = Movie.new;
       movie.poster_path = poster;
       movie.title = title;
       movie.identifier = identifier;
+      movie.backdrop_path = backGroundImg;
     
    
           
@@ -143,9 +145,15 @@ NSString *cellId = @"cellId";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Movie *movie = self.movies[indexPath.row];
+    InfoViewController *vc;
     
+    vc = InfoViewController.new;
+    vc.movie = movie;
+  
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController: vc];
     
-    [self.navigationController presentViewController:[[UINavigationController alloc]initWithRootViewController: InfoViewController.new] animated:YES completion:nil];
+     
+    [self.navigationController presentViewController: nav animated:YES completion:nil];
     
     
     

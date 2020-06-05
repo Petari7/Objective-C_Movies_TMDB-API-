@@ -15,6 +15,7 @@
 @property(strong,nonatomic) NSString *title;
 @property(strong,nonatomic) NSNumber *identifier;
 @property(strong,nonatomic) NSString *poster_path;
+@property(strong,nonatomic) NSString *backdrop_path;
 
 
 
