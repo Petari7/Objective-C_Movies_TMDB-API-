@@ -22,16 +22,31 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        [self setupViews];
+[self setupViews];
+[self cellStylizing];
         
         
       
         
         
-    }
-    return self;
+}
+return self;
     
     
+}
+
+
+
+
+-(void) cellStylizing
+{
+    
+    
+    
+    self.layer.shadowOffset = CGSizeMake(1, 0);
+    self.layer.shadowColor = [[UIColor grayColor] CGColor];
+    self.layer.shadowRadius = 5;
+    self.layer.shadowOpacity = .50;
 }
 
 //-MARK: Added UIImageView & UILabel on Cell

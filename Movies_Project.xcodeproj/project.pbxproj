@@ -64,12 +64,6 @@
 		461BB8E82486D47F007C9358 = {
 			isa = PBXGroup;
 			children = (
-				4683558D2489862B0067E4C4 /* CustomCollectionViewCell.h */,
-				4683558E2489862B0067E4C4 /* CustomCollectionViewCell.m */,
-				46835593248AB0C50067E4C4 /* MovieInfoModel.h */,
-				46835594248AB0C50067E4C4 /* MovieInfoModel.m */,
-				46232654248B87C700215385 /* ActorModel.h */,
-				46232655248B87C700215385 /* ActorModel.m */,
 				461BB8F32486D47F007C9358 /* Movies_Project */,
 				461BB8F22486D47F007C9358 /* Products */,
 				7D7E6405AD16D9CA7BEC0FCD /* Pods */,
@@ -88,23 +82,53 @@
 		461BB8F32486D47F007C9358 /* Movies_Project */ = {
 			isa = PBXGroup;
 			children = (
+				46232659248BEA8C00215385 /* Views */,
+				46232658248BEA8400215385 /* Models */,
+				46232657248BEA6500215385 /* Controllers */,
 				461BB8F42486D47F007C9358 /* AppDelegate.h */,
 				461BB8F52486D47F007C9358 /* AppDelegate.m */,
-				468355872488204E0067E4C4 /* MoviesModel.h */,
-				468355882488204E0067E4C4 /* MoviesModel.m */,
 				461BB8F72486D47F007C9358 /* SceneDelegate.h */,
 				461BB8F82486D47F007C9358 /* SceneDelegate.m */,
-				461BB8FA2486D47F007C9358 /* MainViewController.h */,
-				461BB8FB2486D47F007C9358 /* MainViewController.m */,
-				4683558A24894EB00067E4C4 /* InfoViewController.h */,
-				4683558B24894EB00067E4C4 /* InfoViewController.m */,
-				468355842488041D0067E4C4 /* CustomMovieCell.h */,
-				468355852488041D0067E4C4 /* CustomMovieCell.m */,
 				461BB9002486D482007C9358 /* Assets.xcassets */,
 				461BB9052486D482007C9358 /* Info.plist */,
 				461BB9062486D482007C9358 /* main.m */,
 			);
 			path = Movies_Project;
+			sourceTree = "<group>";
+		};
+		46232657248BEA6500215385 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				461BB8FA2486D47F007C9358 /* MainViewController.h */,
+				461BB8FB2486D47F007C9358 /* MainViewController.m */,
+				4683558A24894EB00067E4C4 /* InfoViewController.h */,
+				4683558B24894EB00067E4C4 /* InfoViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		46232658248BEA8400215385 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				468355872488204E0067E4C4 /* MoviesModel.h */,
+				468355882488204E0067E4C4 /* MoviesModel.m */,
+				46835593248AB0C50067E4C4 /* MovieInfoModel.h */,
+				46835594248AB0C50067E4C4 /* MovieInfoModel.m */,
+				46232654248B87C700215385 /* ActorModel.h */,
+				46232655248B87C700215385 /* ActorModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		46232659248BEA8C00215385 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				468355842488041D0067E4C4 /* CustomMovieCell.h */,
+				468355852488041D0067E4C4 /* CustomMovieCell.m */,
+				4683558E2489862B0067E4C4 /* CustomCollectionViewCell.m */,
+				4683558D2489862B0067E4C4 /* CustomCollectionViewCell.h */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		7D7E6405AD16D9CA7BEC0FCD /* Pods */ = {

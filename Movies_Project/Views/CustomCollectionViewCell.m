@@ -20,14 +20,16 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
-        [self setupViews];
+    
+    [self setupViews];
         
 }
     return self;
     
     
 }
+//-MARK: Added Views, Layout Code
+
 -(void) setupViews {
 _movieImage = UIImageView.new;
 _movieImage.translatesAutoresizingMaskIntoConstraints = false;

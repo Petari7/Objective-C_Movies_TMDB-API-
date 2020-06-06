@@ -20,6 +20,7 @@
 
 @interface MainViewController ()
 
+//-MARK: Properties
 @property(strong,nonatomic) NSMutableArray<Movie *>* movies;
 @property(strong,nonatomic) NSMutableArray<ActorModel *>* actors;
 
@@ -32,8 +33,6 @@
 @end
 
 NSString *cellId = @"cellId";
-
-NSNumber *number;
 
 
 @implementation MainViewController
@@ -50,7 +49,7 @@ NSNumber *number;
     
    
     
-     [super viewDidLoad];
+    [super viewDidLoad];
     [self fetchMovies];
     [self setupCollectionView];
    
@@ -66,11 +65,9 @@ NSNumber *number;
 }
 
 
-
+//-MARK: FetchMovieInfo , URLSession
 -(void) fetchMovieInfo: (NSString *) identifier completion:(void(^)(MovieInfoModel* movieInfo, NSURLResponse *response))callback
 {
-
-
 
 NSString *firstStringTile = @"https://api.themoviedb.org/3/movie/";
 NSString *identif = identifier;
@@ -80,13 +77,10 @@ NSString *string = [NSString stringWithFormat:@"%@ %@ %@", firstStringTile, iden
 NSString *urlString;
     
 urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-//
-    
+
 NSURL *url = [NSURL URLWithString:urlString];
     
     
-
-
 [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 
 NSError *err;
@@ -99,12 +93,19 @@ return;
 
 
 
+NSString *status = moviesInfoJSon[@"status"];
 NSString *overview = moviesInfoJSon[@"overview"];
 NSString *releaseDate = moviesInfoJSon[@"release_date"];
 NSString *tagline = moviesInfoJSon[@"tagline"];
-
-
+    
+NSDictionary *dictionary = [moviesInfoJSon objectForKey:@"genres"];
+    
+for(NSDictionary *dict in dictionary) {
+        
+NSString *genre = dict[@"name"];
 MovieInfoModel *movie = MovieInfoModel.new;
+movie.genre = genre;
+movie.status = status;
 movie.overview = overview;
 movie.release_date = releaseDate;
 movie.tagline = tagline;
@@ -113,7 +114,7 @@ movie.tagline = tagline;
 
     
 callback(movie, response);
-
+}
 
 }] resume];
 
@@ -128,6 +129,7 @@ callback(movie, response);
 }
 
 
+//-MARK: FetchAllMovies NSURLSession
 
 -(void) fetchMovies{
     
@@ -139,48 +141,45 @@ NSURL *url = [NSURL URLWithString:urlString];
 
 [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
               
+NSError *err;
               
-  
+NSDictionary *moviesJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
               
-      NSError *err;
-              
-      NSDictionary *moviesJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
-              
-      if(err) {
-          NSLog(@"Failed to serialize into JSON: %@", error);
-          return;
+    if(err) {
+    NSLog(@"Failed to serialize into JSON: %@", error);
+    return;
                   
-              }
+    }
               
-      NSDictionary *dictionary = [moviesJSON objectForKey:@"results"];
+NSDictionary *dictionary = [moviesJSON objectForKey:@"results"];
               
-      NSMutableArray<Movie *>*movies = NSMutableArray.new;
+NSMutableArray<Movie *>*movies = NSMutableArray.new;
               
 
-      for(NSDictionary *moviesDict in dictionary) {
-                  
-      NSString *title = moviesDict[@"title"];
-      NSString *identifier = moviesDict[@"id"];
-      NSString *poster = moviesDict[@"poster_path"];
-      NSString *backGroundImg = moviesDict[@"backdrop_path"];
-      Movie *movie = Movie.new;
-      movie.poster_path = poster;
-      movie.title = title;
-      movie.identifier = identifier;
-      movie.backdrop_path = backGroundImg;
+for(NSDictionary *moviesDict in dictionary) {
+         
+        
+NSString *title = moviesDict[@"title"];
+NSString *identifier = moviesDict[@"id"];
+NSString *poster = moviesDict[@"poster_path"];
+NSString *backGroundImg = moviesDict[@"backdrop_path"];
+Movie *movie = Movie.new;
+    
+movie.poster_path = poster;
+movie.title = title;
+movie.identifier = identifier;
+movie.backdrop_path = backGroundImg;
     
    
-          
-      [movies addObject:movie];
+[movies addObject:movie];
 
                   
-      }
-      self.movies = movies;
-          dispatch_async(dispatch_get_main_queue(), ^{
-              [self->_collectionView reloadData];
-          });
-          
-      }] resume];
+}
+self.movies = movies;
+dispatch_async(dispatch_get_main_queue(), ^{
+[self->_collectionView reloadData];
+});
+}] resume];
           
         
     
@@ -192,7 +191,7 @@ NSURL *url = [NSURL URLWithString:urlString];
 
 
 
-
+//-MARK: CollectionViewDelegate Functions
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
      
@@ -210,44 +209,32 @@ NSURL *url = [NSURL URLWithString:urlString];
     cell.movieLabel.text = movie.title;
     cell.identifier = movie.identifier;
     
-   
-    
-    
+
     NSString *str = @"https://image.tmdb.org/t/p/w185";
-    str = [str stringByAppendingString:movie.poster_path];
-    
+        str = [str stringByAppendingString:movie.poster_path];
     [cell.movieImage sd_setImageWithURL:[NSURL URLWithString: str ]];
    
-    cell.layer.shadowOffset = CGSizeMake(1, 0);
-    cell.layer.shadowColor = [[UIColor grayColor] CGColor];
-    cell.layer.shadowRadius = 5;
-    cell.layer.shadowOpacity = .50;
+  
     
 
    
     return cell;
 }
 
+//-MARK: PresentViewController, fetchMovieInfo
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Movie *movie = self.movies[indexPath.row];
-    InfoViewController *vc;
-    vc = InfoViewController.new;
-    
+    InfoViewController *infoViewController;
+    infoViewController = InfoViewController.new;
      
-   
-        
     [self fetchMovieInfo:movie.identifier completion:^(MovieInfoModel *movieInfo, NSURLResponse *resp) {
-        
-    
-        
-    vc.movieInfo = movieInfo;
+    infoViewController.movieInfo = movieInfo;
     }];
     
-    vc.movie = movie;
+    infoViewController.movie = movie;
     
-  
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController: vc];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController: infoViewController];
     
      
     [self.navigationController presentViewController: nav animated:YES completion:nil];
@@ -259,7 +246,6 @@ NSURL *url = [NSURL URLWithString:urlString];
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-//
     CGFloat newSize = 0;
     newSize = (self.view.frame.size.width - 3 * 8) / 2;
     
@@ -280,24 +266,23 @@ return 1;
     return UIEdgeInsetsMake(16, 8, 0, 8);
 }
 
+//-MARK: CollectionViewInit & LayoutCode
 - (void)setupCollectionView {
-    self.navigationItem.title = @"Discover Movies";
-    self.navigationController.navigationBar.prefersLargeTitles = YES;
-    
-    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    _collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
     
     
+self.navigationItem.title = @"Discover Movies";
+self.navigationController.navigationBar.prefersLargeTitles = YES;
+
     
-    [_collectionView setDataSource:self];
-    [_collectionView setDelegate:self];
+UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
+_collectionView=[[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
+[_collectionView setDataSource:self];
+[_collectionView setDelegate:self];
     
-   
+[_collectionView registerClass:[CustomMovieCell class] forCellWithReuseIdentifier:cellId];
+[_collectionView setBackgroundColor:[UIColor whiteColor]];
     
-    [_collectionView registerClass:[CustomMovieCell class] forCellWithReuseIdentifier:cellId];
-    [_collectionView setBackgroundColor:[UIColor whiteColor]];
-    
-    [self.view addSubview:_collectionView];
+[self.view addSubview:_collectionView];
 }
 
 @end
