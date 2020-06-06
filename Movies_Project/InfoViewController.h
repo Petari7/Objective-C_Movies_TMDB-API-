@@ -9,11 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "MoviesModel.h"
 #import "MovieInfoModel.h"
+#import "ActorModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol CustomCellViewDelegate <NSObject>
+
+-(void) addObject:(ActorModel*) array;
+
+
+@end
+
 @interface InfoViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
+@property(strong,nonatomic)UICollectionView *collectionView;
 @property (strong,nonatomic) NSString *movieTitle;
 @property(strong, nonatomic) Movie *movie;
 @property(strong, nonatomic) MovieInfoModel *movieInfo;
@@ -27,13 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) UIView *secondSeparatorView;
 @property(strong, nonatomic) UILabel *actersLabel;
 
-//let blurredEfect = UIBlurEffect(style: .regular)
-//var visualEffect: UIVisualEffectView!
-
-//@property(strong, nonatomic) UIVisualEffectView *blurredView;
-//@property(strong, nonatomic) UIBlurEffect *blurEffect;
-
-
+@property(nonatomic,weak) id<CustomCellViewDelegate>delegate;
 
 
 

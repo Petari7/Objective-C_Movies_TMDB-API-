@@ -12,6 +12,8 @@
 #import <SDWebImage/SDWebImage.h>
 #import "InfoViewController.h"
 #import "MovieInfoModel.h"
+#import "ActorModel.h"
+#import "CustomCollectionViewCell.h"
 
 
 
@@ -19,6 +21,8 @@
 @interface MainViewController ()
 
 @property(strong,nonatomic) NSMutableArray<Movie *>* movies;
+@property(strong,nonatomic) NSMutableArray<ActorModel *>* actors;
+
 
 
 
@@ -47,11 +51,11 @@ NSNumber *number;
    
     
      [super viewDidLoad];
-    [self setupCollectionView];
     [self fetchMovies];
+    [self setupCollectionView];
    
    
-    
+   
     
     
        
@@ -61,8 +65,12 @@ NSNumber *number;
 
 }
 
+
+
 -(void) fetchMovieInfo: (NSString *) identifier completion:(void(^)(MovieInfoModel* movieInfo, NSURLResponse *response))callback
 {
+
+
 
 NSString *firstStringTile = @"https://api.themoviedb.org/3/movie/";
 NSString *identif = identifier;
@@ -226,17 +234,16 @@ NSURL *url = [NSURL URLWithString:urlString];
     InfoViewController *vc;
     vc = InfoViewController.new;
     
-
- 
+     
+   
+        
     [self fetchMovieInfo:movie.identifier completion:^(MovieInfoModel *movieInfo, NSURLResponse *resp) {
         
-    NSLog(@"%@", movieInfo.tagline);
-   
+    
+        
     vc.movieInfo = movieInfo;
- 
     }];
     
-
     vc.movie = movie;
     
   

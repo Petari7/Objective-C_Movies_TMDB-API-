@@ -7,13 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ActorModel.h"
+#import "InfoViewController.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CustomCollectionViewCell : UICollectionViewCell<UICollectionViewDelegate,UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
+@interface CustomCollectionViewCell : UICollectionViewCell;
 
 @property(strong,nonatomic) UICollectionView *collectionView;
 @property(strong,nonatomic) UICollectionViewFlowLayout *flowLayout;
+@property(strong, nonatomic) UIImageView *movieImage;
+
 
 
 

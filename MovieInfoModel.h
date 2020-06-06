@@ -16,7 +16,7 @@
 @property(strong,nonatomic) NSString *release_date;
 @property(strong,nonatomic) NSString *genre;
 @property(strong,nonatomic) NSString *tagline;
-
+@property(strong,nonatomic) NSString *status;
 
 
 

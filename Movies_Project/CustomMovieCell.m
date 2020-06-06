@@ -59,6 +59,7 @@
     
     [_movieLabel.topAnchor constraintEqualToAnchor:self.movieImage.bottomAnchor constant:0].active = true;
     
+    [_movieLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:14]];
     _movieLabel.text = @"Captain Coruse";
     _movieLabel.numberOfLines = 0;
     [_movieLabel sizeToFit];

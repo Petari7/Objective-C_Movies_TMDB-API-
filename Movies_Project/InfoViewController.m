@@ -19,12 +19,15 @@
 @end
 
 NSString *cellid = @"cellId";
+NSMutableArray<ActorModel *>*actors;
+NSDictionary *theInfo;
+
 
 @implementation InfoViewController
 
 - (void)setupBlurEffect {
     UIVisualEffect *blurEffect;
-    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleRegular];
     
     UIVisualEffectView *visualEffectView;
     visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -50,25 +53,32 @@ NSString *cellid = @"cellId";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+ 
     [self setupViews];
-    
-    
+    [self viewDidLayoutSubviews];
+   
     [self setupBlurEffect];
 
     
+    actors = NSMutableArray.new;
     
     
-     
+    [self fetchActors:self.movie.identifier completion:^(ActorModel *actor, NSURLResponse *response) {
+        
+    [actors addObject:actor];
+        
 
-    self.movieNameLabel.text = _movie.title;
-    self.overviewLabel.text = _movieInfo.overview;
-    self.tagLineLabel.text = _movieInfo.tagline;
+        
+    }];
     
+    
+   
+ 
     
     
   
     
-    NSString *str = @"https://image.tmdb.org/t/p/w185";
+    NSString *str = @"https://image.tmdb.org/t/p/w92";
     str = [str stringByAppendingString:_movie.poster_path];
     
     [self.imageView sd_setImageWithURL:[NSURL URLWithString: str ]];
@@ -87,6 +97,7 @@ NSString *cellid = @"cellId";
       collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
       collectionView.translatesAutoresizingMaskIntoConstraints = false;
 
+     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 
 
      [self.view addSubview:collectionView];
@@ -102,6 +113,7 @@ NSString *cellid = @"cellId";
     
      self.actersLabel = UILabel.new;
     self.actersLabel.text = @"Acters";
+    [self.actersLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:16]];
     
     self.actersLabel.textColor = [UIColor blackColor];
     self.actersLabel.translatesAutoresizingMaskIntoConstraints = false;
@@ -109,7 +121,7 @@ NSString *cellid = @"cellId";
     [self.actersLabel.topAnchor constraintEqualToAnchor:collectionView.topAnchor constant: 12].active = true;
      
 
-    [self.actersLabel.leftAnchor constraintEqualToAnchor:collectionView.leftAnchor constant: 12].active = true;
+    [self.actersLabel.leftAnchor constraintEqualToAnchor:collectionView.leftAnchor constant: 2].active = true;
 
     [self.actersLabel.heightAnchor constraintEqualToConstant:20].active = true;
 
@@ -126,6 +138,14 @@ self.view.backgroundColor = [UIColor whiteColor];
 //
     
     
+}
+
+- (void)viewDidLayoutSubviews {
+    
+    self.movieNameLabel.text = _movie.title;
+     self.overviewLabel.text = _movieInfo.overview;
+     self.tagLineLabel.text = _movieInfo.tagline;
+        
 }
 
 
@@ -182,6 +202,7 @@ self.view.backgroundColor = [UIColor whiteColor];
     self.movieNameLabel = UILabel.new;
     self.movieNameLabel.translatesAutoresizingMaskIntoConstraints = false;
     self.movieNameLabel.text = @"The Blackout: Invasion Earth";
+    [self.movieNameLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:17]];
     
     self.movieNameLabel.numberOfLines = 0;
     self.movieNameLabel.textColor = [UIColor blackColor];
@@ -257,7 +278,6 @@ self.view.backgroundColor = [UIColor whiteColor];
     
   
    
-        
     
     
     
@@ -269,22 +289,122 @@ self.view.backgroundColor = [UIColor whiteColor];
 {
     CustomCollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor clearColor];
+    
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.layer.cornerRadius = 35;
+    cell.clipsToBounds = TRUE;
+    
+    ActorModel *actor = actors[indexPath.row];
+   
+    if (actor.profilePic == NULL) {
+    
+    cell.movieImage.image = NULL;
+    } else {
+     NSString *str = @"https://image.tmdb.org/t/p/w185";
+    str = [str stringByAppendingString:actor.profilePic];
+     
+     [cell.movieImage sd_setImageWithURL:[NSURL URLWithString: str ]];
+    }
+    
     
     
     
     return cell;
   
 }
-    
+
 
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 1;
+    
+    
+    
+    
+    return actors.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(self.view.frame.size.width, 150);
+    return CGSizeMake(70, 70);
 }
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(24, 8, 0, 8);
+}
+
+
+-(void) fetchActors: (NSString *) identifier completion:(void(^)(ActorModel* actor, NSURLResponse *response))callback
+{
+    
+    NSString *firstStringTile = @"https://api.themoviedb.org/3/movie/";
+    NSString *identif = self.movie.identifier;
+    NSString *lastStringTile = @"/credits?api_key=fea6a69ff7391818240b67fa3bb83786";
+    NSString *string = [NSString stringWithFormat:@"%@ %@ %@", firstStringTile, identif, lastStringTile];
+        
+    NSString *urlString;
+        
+    urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    //
+        
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    
+    [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                
+                
+    
+                
+        NSError *err;
+                
+        NSDictionary *castJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+                
+        if(err) {
+            NSLog(@"Failed to serialize into JSON: %@", error);
+            return;
+                    
+                }
+                
+        NSDictionary *dictionary = [castJSON objectForKey:@"cast"];
+                
+        for(NSDictionary *dict in dictionary) {
+            
+            
+       NSString *imageUrl = dict[@"profile_path"];
+        
+            
+        if (imageUrl != [NSNull null]) {
+        if ([imageUrl length] > 0) {
+                // Do something
+            
+        
+        ActorModel *actor = ActorModel.new;
+        actor.profilePic = imageUrl;
+                
+        callback(actor, response);
+        }
+        }
+        NSLog(@"%@", imageUrl);
+         
+        
+        
+
+ }
+                    
+        
+       
+            
+        }] resume];
+            
+          
+      
+      
+
+
+        
+        
+    
+    
+}
+
 @end
