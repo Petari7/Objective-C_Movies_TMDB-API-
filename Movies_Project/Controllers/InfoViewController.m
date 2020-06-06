@@ -140,7 +140,7 @@ string = [string stringByAppendingString: _movie.backdrop_path];
 
 //MARK: - All methods in class
 - (void)avoidViewControllerPollution {
-    [self setDataOnLabels];
+   
     [self setupViews];
     [self setupBlurEffect];
     [self fetchCastActors];
@@ -154,8 +154,9 @@ string = [string stringByAppendingString: _movie.backdrop_path];
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+   
     [self avoidViewControllerPollution];
+    [self setDataOnLabels];
 //
 //
 //
