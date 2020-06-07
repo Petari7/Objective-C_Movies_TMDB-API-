@@ -6,9 +6,10 @@
 //  Copyright © 2020 Petar Ivic. All rights reserved.
 //
 
+
 #import "MovieInfoModel.h"
 
-@implementation MovieInfoModel
+@implementation MovieInfoModel   
 
 
 

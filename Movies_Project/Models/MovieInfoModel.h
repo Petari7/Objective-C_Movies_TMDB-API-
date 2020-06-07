@@ -6,8 +6,11 @@
 //  Copyright © 2020 Petar Ivic. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
-#import "MainViewController.h"
+
+
+
 
 @interface MovieInfoModel : NSObject 
 
@@ -17,12 +20,6 @@
 @property(strong,nonatomic) NSString *genre;
 @property(strong,nonatomic) NSString *tagline;
 @property(strong,nonatomic) NSString *status;
-
-
-
-
-    
-
 
 @end
 

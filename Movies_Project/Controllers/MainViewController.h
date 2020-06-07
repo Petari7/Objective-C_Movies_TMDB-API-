@@ -21,7 +21,5 @@
 
  
 }
-@property (assign) int foo;
 
 @end
-

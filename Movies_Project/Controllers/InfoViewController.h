@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong, nonatomic) UIView *separatorView;
 @property(strong, nonatomic) UILabel *overviewLabel;
 @property(strong, nonatomic) UIView *secondSeparatorView;
-@property(strong, nonatomic) UILabel *actersLabel;
+@property(strong, nonatomic) UILabel *actorsLabel;
 
 
 

@@ -18,6 +18,7 @@
 
 @end
 
+
 NSString *cellid = @"cellId";
 NSMutableArray<ActorModel *>*actors;
 NSDictionary *theInfo;
@@ -55,6 +56,7 @@ NSString *thirdStringTile = _movieInfo.release_date;
 NSString *stringFinal = [NSString stringWithFormat:@"%@ - %@ - %@", firstStringTile, secondStringTile, thirdStringTile];
     
 self.movieInfoLabel.text = stringFinal;
+
 }
 
 //-MARK: Fetched all movie actors
@@ -63,21 +65,15 @@ self.movieInfoLabel.text = stringFinal;
 actors = NSMutableArray.new;
 [self fetchActors:self.movie.identifier completion:^(ActorModel *actor, NSURLResponse *response) {
         
-[actors addObject:actor];
-dispatch_async(dispatch_get_main_queue(), ^{
-[self->_collectionView reloadData];
-});
-
    
+          
+[actors addObject:actor];
+[self. collectionView reloadData];
+
 
 }];
 
-    
 
-    
-            
-
-         
     
 }
 //-MARK: Background and circle image
@@ -119,19 +115,19 @@ string = [string stringByAppendingString: _movie.backdrop_path];
     
     
     
-    self.actersLabel = UILabel.new;
-    self.actersLabel.text = @"Acters";
-    [self.actersLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:16]];
+    self.actorsLabel = UILabel.new;
+    self.actorsLabel.text = @"Actors";
+    [self.actorsLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:16]];
     
-    self.actersLabel.textColor = [UIColor blackColor];
-    self.actersLabel.translatesAutoresizingMaskIntoConstraints = false;
-    [collectionView addSubview:_actersLabel];
-    [self.actersLabel.topAnchor constraintEqualToAnchor:collectionView.topAnchor constant: 12].active = true;
+    self.actorsLabel.textColor = [UIColor blackColor];
+    self.actorsLabel.translatesAutoresizingMaskIntoConstraints = false;
+    [collectionView addSubview:_actorsLabel];
+    [self.actorsLabel.topAnchor constraintEqualToAnchor:collectionView.topAnchor constant: 12].active = true;
     
     
-    [self.actersLabel.leftAnchor constraintEqualToAnchor:collectionView.leftAnchor constant: 2].active = true;
+    [self.actorsLabel.leftAnchor constraintEqualToAnchor:collectionView.leftAnchor constant: 2].active = true;
     
-    [self.actersLabel.heightAnchor constraintEqualToConstant:20].active = true;
+    [self.actorsLabel.heightAnchor constraintEqualToConstant:20].active = true;
     
     self.navigationItem.title = self.movie.title;
     self.view.backgroundColor = [UIColor whiteColor];
@@ -146,36 +142,31 @@ string = [string stringByAppendingString: _movie.backdrop_path];
 
 //MARK: - All methods in class
 
-//    [self setupViews];
-//    [self collectionViewSetup];
-//    [self setupBlurEffect];
-//    [self setMovieImages];
-//
-//
-    
+- (void)allMethods {
+    [self setupViews];
+    [self setDataOnLabels];
+    [self collectionViewSetup];
+    [self setMovieImages];
+    [self setupBlurEffect];
+}
+
+   
    
 
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    [self setupViews];
-    [self collectionViewSetup];
-    [self setMovieImages];
-    [self fetchCastActors];
-    [self setDataOnLabels];
-    [self setupBlurEffect];
-   
-  
-   
-   
-//
-//
-//
+    [self allMethods];
     
     
 }
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self fetchCastActors];
+}
+
+
 
 
 
@@ -289,29 +280,27 @@ self.secondSeparatorView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.2
 {
     CustomCollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:cellid forIndexPath:indexPath];
     
-    
-    cell.backgroundColor = [UIColor whiteColor];
-    cell.layer.cornerRadius = 35;
-    cell.clipsToBounds = TRUE;
+   
     
     ActorModel *actor = actors[indexPath.row];
-//    cell.actor = actor;
     
     if (actor.profilePic == NULL) {
-         
-        cell.movieImage.image = NULL;
-         } else {
-          NSString *str = @"https://image.tmdb.org/t/p/w185";
-             str = [str stringByAppendingString:actor.profilePic];
           
-             [cell.movieImage sd_setImageWithURL:[NSURL URLWithString: str ]];
-          
-         }
-    
+        cell.actorImage.image = NULL;
+          } else {
+           NSString *str = @"https://image.tmdb.org/t/p/w185";
+              str = [str stringByAppendingString:actor.profilePic];
+           
+              [cell.actorImage sd_setImageWithURL:[NSURL URLWithString: str ]];
+           
+          }
+     
     cell.backgroundColor = [UIColor whiteColor];
     cell.layer.cornerRadius = 35;
     cell.clipsToBounds = TRUE;
-
+    
+    
+   
     
     return cell;
   
@@ -388,10 +377,7 @@ self.secondSeparatorView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.2
         callback(actor, response);
         }
         }
-        NSLog(@"%@", imageUrl);
-         
-        
-        
+                
 
  }
 }] resume];

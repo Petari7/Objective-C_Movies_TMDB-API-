@@ -6,7 +6,7 @@
 //  Copyright © 2020 Petar Ivic. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "MainViewController.h"
 
 

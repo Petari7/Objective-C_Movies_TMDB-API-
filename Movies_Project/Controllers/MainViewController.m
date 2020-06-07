@@ -53,23 +53,16 @@ int *number = 2;
     num = [[NSNumber alloc] initWithInt:1];
     [super viewDidLoad];
     
- 
     [self fetchMovies:num];
     [self setupCollectionView];
-   
-   
-   
     
-    
-       
-      
-        
-
 
 }
 
 
-//-MARK: FetchMovieInfo , URLSession
+
+
+//-MARK: Fetch movie info , URLSession
 -(void) fetchMovieInfo: (NSString *) identifier completion:(void(^)(MovieInfoModel* movieInfo, NSURLResponse *response))callback
 {
 
@@ -120,6 +113,7 @@ movie.tagline = tagline;
 callback(movie, response);
 }
 
+
 }] resume];
 
 
@@ -133,7 +127,7 @@ callback(movie, response);
 }
 
 
-//-MARK: FetchAllMovies NSURLSession
+//-MARK: Fetch first 20 Movies NSURLSession
 
 -(void) fetchMovies: (NSNumber* ) page{
     
@@ -200,60 +194,39 @@ dispatch_async(dispatch_get_main_queue(), ^{
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     
     
-   
-    lastItem  = self.movies.count - 1;
-
+    int lastItem  = [self.movies count] -  1;
     if (lastItem == indexPath.row) {
-        
     [self loadMoreData];
-    
     }
     
 
 }
 
-
+//MARK:- Load more data, Infinite scroll
 -(void) loadMoreData {
-    
-    
-       
-    
-    
-       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self fetchOtherMovies:number completion:^(Movie *movie, NSURLResponse *response) {
+      
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.45 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+[self fetchOtherMovies:number completion:^(Movie *movie, NSURLResponse *response) {
             
-        [self->_movies addObject:movie];
-        
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-        number++;
-        [self->_collectionView reloadData];
-        
-        });
-        
-       }];
-           
-           
+[self. movies addObject:movie];
+number++;
+dispatch_async(dispatch_get_main_queue(), ^{
+[self->_collectionView reloadData];
+});
+}];
+});
 
-       });
-    
-
-    
-    
 }
-
+//MARK:- Fetch more movies with callback
 -(void) fetchOtherMovies: (int* ) page completion:(void(^)(Movie* movie, NSURLResponse *response))callback {
     
-    
-   
-    NSString *firstUrlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=";
+NSString *firstUrlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=";
     int *pageNumber = page;
     
-    NSString *string = [NSString stringWithFormat:@"%@ %i ", firstUrlString, pageNumber];
+NSString *string = [NSString stringWithFormat:@"%@ %i ", firstUrlString, pageNumber];
     NSString *urlString;
-    urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
-        
-  
+urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+    
 NSURL *url = [NSURL URLWithString:urlString];
     
 
@@ -264,11 +237,10 @@ NSError *err;
               
 NSDictionary *moviesJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
               
-    if(err) {
-    NSLog(@"Failed to serialize into JSON: %@", error);
-    return;
-                  
-    }
+if(err) {
+NSLog(@"Failed to serialize into JSON: %@", error);
+return;
+}
               
 NSDictionary *dictionary = [moviesJSON objectForKey:@"results"];
               
@@ -341,11 +313,13 @@ callback(movie,response);
      
     [self fetchMovieInfo:movie.identifier completion:^(MovieInfoModel *movieInfo, NSURLResponse *resp) {
     infoViewController.movieInfo = movieInfo;
-    
+   
         
     }];
     
     infoViewController.movie = movie;
+    infoViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+       
     
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController: infoViewController];
     
