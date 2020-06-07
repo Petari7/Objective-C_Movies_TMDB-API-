@@ -8,4 +8,5 @@
 
 
 *Objective C _ TMDB - API
+*SDWebImage 
 * Auto Layout created programmatically
