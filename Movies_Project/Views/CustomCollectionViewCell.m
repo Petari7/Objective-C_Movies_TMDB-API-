@@ -8,11 +8,13 @@
 
 #import "CustomCollectionViewCell.h"
 #import "ActorModel.h"
+#import <SDWebImage/SDWebImage.h>
 
 
 
 
 @implementation CustomCollectionViewCell 
+
 
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -21,7 +23,9 @@
     self = [super initWithFrame:frame];
     if (self) {
     
-    [self setupViews];
+        [self setupViews];
+        
+        
         
 }
     return self;

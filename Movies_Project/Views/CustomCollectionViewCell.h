@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(strong,nonatomic) UICollectionView *collectionView;
 @property(strong,nonatomic) UICollectionViewFlowLayout *flowLayout;
 @property(strong, nonatomic) UIImageView *movieImage;
-
+@property(strong, nonatomic) ActorModel *actor;
 
 
 

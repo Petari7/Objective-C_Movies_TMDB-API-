@@ -33,7 +33,10 @@
 @end
 
 NSString *cellId = @"cellId";
-
+NSNumber *num;
+NSNumber *num2;
+NSInteger *lastItem;
+int *number = 2;
 
 @implementation MainViewController
 
@@ -47,10 +50,11 @@ NSString *cellId = @"cellId";
 - (void)viewDidLoad
 {
     
-   
-    
+    num = [[NSNumber alloc] initWithInt:1];
     [super viewDidLoad];
-    [self fetchMovies];
+    
+ 
+    [self fetchMovies:num];
     [self setupCollectionView];
    
    
@@ -131,13 +135,21 @@ callback(movie, response);
 
 //-MARK: FetchAllMovies NSURLSession
 
--(void) fetchMovies{
+-(void) fetchMovies: (NSNumber* ) page{
     
     
-NSString *urlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1";
+   
+    NSString *firstUrlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=";
+    NSNumber *pageNumber = page;
+    
+    NSString *string = [NSString stringWithFormat:@"%@ %@ ", firstUrlString, pageNumber];
+    NSString *urlString;
+    urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         
+  
 NSURL *url = [NSURL URLWithString:urlString];
     
+
 
 [[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
               
@@ -179,16 +191,115 @@ self.movies = movies;
 dispatch_async(dispatch_get_main_queue(), ^{
 [self->_collectionView reloadData];
 });
+    
+
 }] resume];
-          
-        
-    
-    
-
-
     
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+   
+    lastItem  = self.movies.count - 1;
+
+    if (lastItem == indexPath.row) {
+        
+    [self loadMoreData];
+    
+    }
+    
+
+}
+
+
+-(void) loadMoreData {
+    
+    
+       
+    
+    
+       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self fetchOtherMovies:number completion:^(Movie *movie, NSURLResponse *response) {
+            
+        [self->_movies addObject:movie];
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+        number++;
+        [self->_collectionView reloadData];
+        
+        });
+        
+       }];
+           
+           
+
+       });
+    
+
+    
+    
+}
+
+-(void) fetchOtherMovies: (int* ) page completion:(void(^)(Movie* movie, NSURLResponse *response))callback {
+    
+    
+   
+    NSString *firstUrlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=";
+    int *pageNumber = page;
+    
+    NSString *string = [NSString stringWithFormat:@"%@ %i ", firstUrlString, pageNumber];
+    NSString *urlString;
+    urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+        
+  
+NSURL *url = [NSURL URLWithString:urlString];
+    
+
+
+[[NSURLSession.sharedSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+              
+NSError *err;
+              
+NSDictionary *moviesJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+              
+    if(err) {
+    NSLog(@"Failed to serialize into JSON: %@", error);
+    return;
+                  
+    }
+              
+NSDictionary *dictionary = [moviesJSON objectForKey:@"results"];
+              
+NSMutableArray<Movie *>*movies = NSMutableArray.new;
+              
+
+for(NSDictionary *moviesDict in dictionary) {
+         
+        
+NSString *title = moviesDict[@"title"];
+NSString *identifier = moviesDict[@"id"];
+NSString *poster = moviesDict[@"poster_path"];
+NSString *backGroundImg = moviesDict[@"backdrop_path"];
+Movie *movie = Movie.new;
+    
+movie.poster_path = poster;
+movie.title = title;
+movie.identifier = identifier;
+movie.backdrop_path = backGroundImg;
+    
+   
+[movies addObject:movie];
+
+  
+callback(movie,response);
+}
+
+
+}] resume];
+    
+}
 
 
 //-MARK: CollectionViewDelegate Functions
@@ -230,6 +341,8 @@ dispatch_async(dispatch_get_main_queue(), ^{
      
     [self fetchMovieInfo:movie.identifier completion:^(MovieInfoModel *movieInfo, NSURLResponse *resp) {
     infoViewController.movieInfo = movieInfo;
+    
+        
     }];
     
     infoViewController.movie = movie;

@@ -64,15 +64,21 @@ actors = NSMutableArray.new;
 [self fetchActors:self.movie.identifier completion:^(ActorModel *actor, NSURLResponse *response) {
         
 [actors addObject:actor];
-        
 dispatch_async(dispatch_get_main_queue(), ^{
 [self->_collectionView reloadData];
 });
-        
-[self.collectionView reloadData];
-        
-        
-    }];
+
+   
+
+}];
+
+    
+
+    
+            
+
+         
+    
 }
 //-MARK: Background and circle image
 - (void)setMovieImages {
@@ -139,32 +145,37 @@ string = [string stringByAppendingString: _movie.backdrop_path];
 
 
 //MARK: - All methods in class
-- (void)avoidViewControllerPollution {
+
+//    [self setupViews];
+//    [self collectionViewSetup];
+//    [self setupBlurEffect];
+//    [self setMovieImages];
+//
+//
+    
    
-    [self setupViews];
-    [self setupBlurEffect];
-    [self fetchCastActors];
-    [self setMovieImages];
-    
-    
-    
-    [self collectionViewSetup];
-}
+
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-   
-    [self avoidViewControllerPollution];
+    [self setupViews];
+    [self collectionViewSetup];
+    [self setMovieImages];
+    [self fetchCastActors];
     [self setDataOnLabels];
+    [self setupBlurEffect];
+   
+  
+   
+   
 //
 //
 //
     
     
 }
-
-
 
 
 
@@ -284,19 +295,23 @@ self.secondSeparatorView.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.2
     cell.clipsToBounds = TRUE;
     
     ActorModel *actor = actors[indexPath.row];
-   
+//    cell.actor = actor;
+    
     if (actor.profilePic == NULL) {
+         
+        cell.movieImage.image = NULL;
+         } else {
+          NSString *str = @"https://image.tmdb.org/t/p/w185";
+             str = [str stringByAppendingString:actor.profilePic];
+          
+             [cell.movieImage sd_setImageWithURL:[NSURL URLWithString: str ]];
+          
+         }
     
-    cell.movieImage.image = NULL;
-    } else {
-     NSString *str = @"https://image.tmdb.org/t/p/w185";
-    str = [str stringByAppendingString:actor.profilePic];
-     
-     [cell.movieImage sd_setImageWithURL:[NSURL URLWithString: str ]];
-    }
-    
-    
-    
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.layer.cornerRadius = 35;
+    cell.clipsToBounds = TRUE;
+
     
     return cell;
   

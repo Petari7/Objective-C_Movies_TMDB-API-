@@ -11,10 +11,17 @@
 
 
 @interface MainViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+
+
 {
+
+
   UICollectionView *_collectionView;
+    
+
  
 }
+@property (assign) int foo;
 
 @end
 
