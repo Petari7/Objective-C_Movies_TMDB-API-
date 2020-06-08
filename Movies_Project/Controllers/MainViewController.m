@@ -205,7 +205,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 //MARK:- Load more data, Infinite scroll
 -(void) loadMoreData {
       
-dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.45 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.45 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
 [self fetchOtherMovies:number completion:^(Movie *movie, NSURLResponse *response) {
             
 [self. movies addObject:movie];
@@ -223,7 +223,7 @@ dispatch_async(dispatch_get_main_queue(), ^{
 NSString *firstUrlString = @"https://api.themoviedb.org/3/discover/movie?api_key=fea6a69ff7391818240b67fa3bb83786&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=";
     int *pageNumber = page;
     
-NSString *string = [NSString stringWithFormat:@"%@ %i ", firstUrlString, pageNumber];
+NSString *string = [NSString stringWithFormat:@"%@ %i ", firstUrlString,pageNumber];
     NSString *urlString;
 urlString = [string stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
     
@@ -318,7 +318,7 @@ callback(movie,response);
     }];
     
     infoViewController.movie = movie;
-    infoViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
        
     
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController: infoViewController];

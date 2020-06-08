@@ -64,14 +64,21 @@ self.movieInfoLabel.text = stringFinal;
 
 actors = NSMutableArray.new;
 [self fetchActors:self.movie.identifier completion:^(ActorModel *actor, NSURLResponse *response) {
-        
-   
-          
+    
+
 [actors addObject:actor];
-[self. collectionView reloadData];
+    
+dispatch_async(dispatch_get_main_queue(), ^{
+[self->_collectionView reloadData];
+});
+   
+
+        
 
 
 }];
+
+[self. collectionView reloadData];
 
 
     
@@ -145,6 +152,7 @@ string = [string stringByAppendingString: _movie.backdrop_path];
 - (void)allMethods {
     [self setupViews];
     [self setDataOnLabels];
+   
     [self collectionViewSetup];
     [self setMovieImages];
     [self setupBlurEffect];
@@ -161,11 +169,12 @@ string = [string stringByAppendingString: _movie.backdrop_path];
     
     
 }
+
 - (void)viewWillAppear:(BOOL)animated {
     
-    [self fetchCastActors];
+     [self fetchCastActors];
+    
 }
-
 
 
 
